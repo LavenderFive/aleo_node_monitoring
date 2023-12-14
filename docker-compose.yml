@@ -184,6 +184,6 @@ services:
       - POLL_SECONDS=${POLL_SECONDS}
       - NODE_URL=${NODE_URL}
     ports:
-      - "9910:9910"
+      - "9911:9911"
     networks:
       - monitor-net
