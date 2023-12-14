@@ -1,14 +1,13 @@
 groups:
-- name: peggo_alerts
+- name: aleo
   rules:
-  - alert: HighNonceDifference
-    expr: abs(peggo_network_nonce - peggo_orchestrator_nonce) > 5 and increase(peggo_orchestrator_nonce[1h]) <= 0
-    for: 15m
+  - alert: AleoLatestHeightNotIncreasing
+    expr: increase(aleo_latest_height[5m]) <= 0
+    for: 5m
     labels:
       severity: critical
     annotations:
-      summary: "High difference between peggo_orchestrator_nonce and peggo_network_nonce"
-      description: "The difference between peggo_orchestrator_nonce and peggo_network_nonce has been greater than 5 for more than 15 minutes."
+      summary: "Aleo latest height has not increased in the last 5 minutes"
 
 - name: targets
   rules:
