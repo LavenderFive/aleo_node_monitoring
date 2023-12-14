@@ -37,17 +37,15 @@ Containers:
 * Aleo Prometheus Exporter (Aleo monitoring solution)
 
 ## TL;DR: Steps
+These steps will get you the bare miniumum dashboard working, as follows: 
 ```
 1. cp .env.sample .env
------ Caddy ------
-1. under caddy/Caddyfile:
-1. replace YOUR_WEBSITE.COM with your website
-1. replace YOUR_EMAIL@EMAIL.COM with your email
-1. point your dns to your monitoring server
------------------
-1. cd ~/aleo-node-monitoring
-1. docker compose up -d
+2. add your node and endpoint under NODE_URL
+3. cd ~/aleo-node-monitoring
+4. docker compose up -d
 ```
+
+<img width="1460" alt="Screenshot 2023-12-14 at 1 53 28 PM" src="https://github.com/LavenderFive/aleo_node_monitoring/assets/9121234/3314fe4f-b5a2-4ed5-9ab2-5f144d61a4b0">
 
 ## Setup Grafana
 
