@@ -28,16 +28,23 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090']
 
+
+  - job_name: 'aleo'
+    static_configs:
+      - targets: ['5.0.5.13:9000']
+        labels:
+          role: 'validator'
+          chain: 'canarynet'
+      - targets: ['5.0.5.12:9000','5.0.5.14:9000','5.0.5.15:9000']
+        labels:
+          role: 'client'
+          chain: 'canarynet'
+
   - job_name: 'pushgateway'
     scrape_interval: 10s
     honor_labels: true
     static_configs:
       - targets: ['pushgateway:9091']
-
-  - job_name: 'aleo'
-    metrics_path: '/'
-    static_configs:
-      - targets: ['aleo_exporter:9911']
 
 alerting:
   alertmanagers:

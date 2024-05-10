@@ -34,18 +34,19 @@ Containers:
 * NodeExporter (host metrics collector)
 * cAdvisor (containers metrics collector)
 * Caddy (reverse proxy and basic auth provider for prometheus and alertmanager)
-* Aleo Prometheus Exporter (Aleo monitoring solution)
 
 ## TL;DR: Steps
 ```
+1. cd ~/aleo-node-monitoring
 1. cp .env.sample .env
+----- Aleo -------
+1. update ip addresses and chain in prometheus/prometheus.yml
 ----- Caddy ------
 1. under caddy/Caddyfile:
 1. replace YOUR_WEBSITE.COM with your website
 1. replace YOUR_EMAIL@EMAIL.COM with your email
 1. point your dns to your monitoring server
 -----------------
-1. cd ~/aleo-node-monitoring
 1. docker compose up -d
 ```
 
@@ -56,11 +57,7 @@ This monitoring solution comes built in with a *very basic* Peggo Monitoring das
 which works out of the box. Grafana, Prometheus, and Infinity are installed 
 automatically.
 
-#### 1. Create Persistent Storage
-To support persistent storage, you'll first need to create the volume:
-```
-docker volume create grafana-storage
-```
+![Aleo Dashboard](https://raw.githubusercontent.com/LavenderFive/aleo-node-monitoring/master/screens/aleo_dashboard.png)
 
 ---
 

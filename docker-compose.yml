@@ -8,19 +8,9 @@ volumes:
     prometheus_data: {}
     grafana_data: {}
     caddy_data: {}
-    grafana-storage:
-      external: true
+    grafana-storage: {}
 
 services:
-  loki:
-    image: grafana/loki:2.6.0
-    container_name: loki
-    ports:
-      - "3100:3100"
-    command: -config.file=/etc/loki/local-config.yaml
-    networks:
-      - monitor-net
-
   prometheus:
     image: prom/prometheus:v2.37.0
     container_name: prometheus
@@ -171,19 +161,3 @@ services:
       - monitor-net
     labels:
       org.label-schema.group: "monitoring"
-
-  aleo_exporter:
-    image: lavender5/aleo_prometheus_exporter:master
-    container_name: aleo_exporter
-    restart: unless-stopped
-    env_file:
-      - '.env'
-    environment:
-      - HTTP_PORT=${HTTP_PORT}
-      - NETWORK_ID=${NETWORK_ID}
-      - POLL_SECONDS=${POLL_SECONDS}
-      - NODE_URL=${NODE_URL}
-    ports:
-      - "9911:9911"
-    networks:
-      - monitor-net

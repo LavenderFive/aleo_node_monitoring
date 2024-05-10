@@ -1,11 +1,18 @@
 groups:
 - name: aleo
   rules:
-  - alert: AleoLatestHeightNotIncreasing
-    expr: increase(aleo_latest_height[5m]) <= 0
+  - alert: AleoValidatorHeightNotIncreasing
+    expr: increase(snarkos_bft_height_total{role="validator"}[5m]) <= 0
     for: 5m
     labels:
       severity: critical
+    annotations:
+      summary: "Aleo Vaidator latest height has not increased in the last 5 minutes"
+  - alert: AleoClientHeightNotIncreasing
+    expr: increase(snarkos_bft_height_total{role="client"}[5m]) <= 0
+    for: 5m
+    labels:
+      severity: info
     annotations:
       summary: "Aleo latest height has not increased in the last 5 minutes"
 
