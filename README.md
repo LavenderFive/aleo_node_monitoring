@@ -53,7 +53,7 @@ Containers:
 ## Setup Grafana
 
 ### Aleo Grafana Dashboard
-This monitoring solution comes built in with a *very basic* Peggo Monitoring dashboard, 
+This monitoring solution comes built in with a *very basic* Aleo Monitoring dashboard, 
 which works out of the box. Grafana, Prometheus, and Infinity are installed 
 automatically.
 
@@ -111,7 +111,7 @@ The Monitor Services Dashboard shows key metrics for monitoring the containers t
 Two alert groups have been setup within the [alert.rules](https://github.com/LavenderFive/aleo_node_monitoring/blob/master/prometheus/alert.rules) configuration file:
 
 * Monitoring services alerts [targets](https://github.com/LavenderFive/aleo_node_monitoring/blob/master/prometheus/alert.rules#L13-L22)
-* Peggo alerts [peggo](https://github.com/LavenderFive/aleo_node_monitoring/blob/master/prometheus/alert.rules#L2-L11)
+* Aleo alerts [targets](https://github.com/LavenderFive/aleo_node_monitoring/blob/master/prometheus/alert.rules#L2-L11)
 
 You can modify the alert rules and reload them by making a HTTP POST call to Prometheus:
 
@@ -136,19 +136,24 @@ Trigger an alert if any of the monitoring targets (node-exporter and cAdvisor) a
 
 ***Aleo alerts***
 
-Trigger an alert if Peggo isn't catching up, AND it's more than 5 nonce behind the network
 
 ```yaml
 - name: aleo_alerts
   rules:
-  - alert: HighNonceDifference
-    expr: abs(peggo_network_nonce - peggo_orchestrator_nonce) > 5 and increase(peggo_orchestrator_nonce[1h]) <= 0
-    for: 15m
+  - alert: AleoValidatorHeightNotIncreasing
+    expr: increase(snarkos_bft_height_total{role="validator"}[5m]) <= 0
+    for: 5m
     labels:
       severity: critical
     annotations:
-      summary: "High difference between peggo_orchestrator_nonce and peggo_network_nonce"
-      description: "The difference between peggo_orchestrator_nonce and peggo_network_nonce has been greater than 5 for more than 15 minutes."
+      summary: "Aleo Vaidator latest height has not increased in the last 5 minutes"
+  - alert: AleoClientHeightNotIncreasing
+    expr: increase(snarkos_bft_height_total{role="client"}[5m]) <= 0
+    for: 5m
+    labels:
+      severity: info
+    annotations:
+      summary: "Aleo latest height has not increased in the last 5 minutes"
 ```
 
 
